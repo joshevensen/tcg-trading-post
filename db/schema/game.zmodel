@@ -5,10 +5,10 @@ model Set {
   id           String    @id @default(cuid())
   name         String
   code         String?
-  release_date DateTime?
+  releaseDate DateTime?
 
-  Game         Game      @relation(fields: [gameId], references: [id])
   gameId       String
+  Game         Game      @relation(fields: [gameId], references: [id])
   Cards        Card[]
 }
 

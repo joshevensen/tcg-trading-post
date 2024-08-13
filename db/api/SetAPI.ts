@@ -1,4 +1,3 @@
-import utils from "../../utils";
 import type { SetNew, Set } from "../types";
 import type { Set as DefaultSet } from "@prisma/client";
 
@@ -37,17 +36,17 @@ export async function SetStore(newSet: SetNew) {
 /**
  * Upsert
  */
-export async function SetUpsert(newSet: SetNew) {
-  const existingSet = await utils.db.set.findFirst({
-    where: { code: newSet.code },
-  });
+// export async function SetUpsert(newSet: SetNew) {
+//   const existingSet = await utils.db.set.findFirst({
+//     where: { gameId_code: newSet.code },
+//   });
 
-  if (existingSet) return existingSet;
+//   if (existingSet) return existingSet;
 
-  const set = SetStore(newSet);
+//   const set = SetStore(newSet);
 
-  return set;
-}
+//   return set;
+// }
 
 /**
  * Update

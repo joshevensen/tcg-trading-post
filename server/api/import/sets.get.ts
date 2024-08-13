@@ -1,23 +1,24 @@
-import { SetUpsert } from "~/db/api/SetAPI";
+import { SetStore } from "~/db/api/SetAPI";
+import { SetNew } from "~/db/types";
 import utils from "~/utils";
 
 export default defineEventHandler(async (event) => {
   try {
     // @ts-ignore
     const { results } = await utils.http.get(
-      `${utils.lorcast.baseURL}/v0/sets`
+      `${utils.games.lorcana.lorcastBaseURL}/v0/sets`
     );
 
     results.forEach(async (result: any) => {
       if (result.code === "cp") return null;
 
-      await SetUpsert({
+      const newSet: SetNew = {
         name: result.name,
         code: result.code,
-        isMain: !!Number(result.code),
-        releasedAt: new Date(result.released_at),
-        prereleasedAt: new Date(result.prereleased_at),
-      });
+        releaseDate: new Date(result.released_at),
+        gameId: '',
+      }
+      await SetStore(newSet);
     });
 
     event.node.res.end();

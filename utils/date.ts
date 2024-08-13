@@ -22,10 +22,10 @@ function formatTime(timestamp: Date) {
   });
 }
 
-const dateService = {
+const dateUtil = {
   checkRefresh,
   formatDate,
   formatTime,
 };
 
-export default dateService;
+export default dateUtil;

@@ -40,10 +40,10 @@ function getEnumOptions(enumObject: any) {
   return options;
 }
 
-const enumService = {
+const enumUtil = {
   formatLabel: formatEnumLabel,
   toArray: getEnumArray,
   toOptions: getEnumOptions,
 };
 
-export default enumService;
+export default enumUtil;

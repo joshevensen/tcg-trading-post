@@ -36,14 +36,19 @@ model User {
   CardCounts UserCardCounts[]
 }
 
+model UserGames {
+  id             String @id() @default(cuid())
+  wantedPlaySets Int    @default(0)
+}
+
 model Set {
-  id           String    @id() @default(cuid())
-  name         String
-  code         String?
-  release_date DateTime?
-  Game         Game      @relation(fields: [gameId], references: [id])
-  gameId       String
-  Cards        Card[]
+  id          String    @id() @default(cuid())
+  name        String
+  code        String?
+  releaseDate DateTime?
+  gameId      String
+  Game        Game      @relation(fields: [gameId], references: [id])
+  Cards       Card[]
 }
 
 model Game {

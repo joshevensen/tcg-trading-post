@@ -56,9 +56,11 @@ function destroy(url: string) {
   return http.delete(url);
 }
 
-export default {
+const httpUtil = {
   get,
   post,
   put,
   destroy,
 };
+
+export default httpUtil;
