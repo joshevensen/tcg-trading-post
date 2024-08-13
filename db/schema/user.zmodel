@@ -1,0 +1,24 @@
+import './game'
+import './card'
+
+model User {
+  id         String           @id @default(cuid())
+  name       String
+  email      String           @unique @email @length(6, 32)
+  password   String           @password @omit
+  zipcode    Int?
+
+  Games      Game[]
+  CardCounts UserCardCounts[]
+
+  // everybody can signup
+  @@allow('create', true)
+
+  // full access by self
+  @@allow('all', auth() == this)
+}
+
+model UserGames {
+  id             String @id @default(cuid())
+  wantedPlaySets Int    @default(0)
+}

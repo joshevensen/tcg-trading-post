@@ -1,0 +1,34 @@
+{
+  "name": "tcg-trading-post",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "db-gen": "npx zenstack generate",
+    "db-push": "npx prisma db push --force-reset",
+    "db-seed": "npx prisma db seed",
+    "studio": "npx prisma studio",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "prisma": {
+    "seed": "node db/seeder.js"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^2.18.4",
+    "@prisma/client": "^5.18.0",
+    "@zenstackhq/runtime": "^2.4.1",
+    "axios": "^1.3.1",
+    "nuxt": "^3.12.4",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.2.0",
+    "prisma": "^5.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "zenstack": "2.4.1"
+  }
+}

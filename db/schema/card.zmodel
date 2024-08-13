@@ -1,0 +1,62 @@
+import './user'
+import './game'
+
+model Card {
+  id           String           @id @default(cuid())
+
+  number       Int
+  name         String
+  text         String?
+  flavorText   String?
+  imageUrl     String?
+  illustrators String[]
+  tcgPlayerId  String?
+
+  Game         Game             @relation(fields: [gameId], references: [id])
+  gameId       String
+  Set          Set              @relation(fields: [setId], references: [id])
+  setId        String
+
+  Types        Type[]
+  Attributes   CardAttributes[]
+  Faction      Faction?         @relation(fields: [factionId], references: [id])
+  factionId    String?
+  Rarity       Rarity?          @relation(fields: [rarityId], references: [id])
+  rarityId     String?
+
+  Counts       UserCardCounts[]
+}
+
+model CardAttributes {
+  valueString  String?
+  valueNumber  Decimal?
+  valueBoolean Boolean?
+  valueDate    DateTime?
+  valueList    String[]
+
+  Attribute    Attribute @relation(fields: [attributeId], references: [id])
+  attributeId  String
+  Card         Card      @relation(fields: [cardId], references: [id])
+  cardId       String
+
+  @@id([cardId, attributeId])
+}
+
+// Explicit Many-to-Many between Card and User
+model UserCardCounts {
+  haveMain         Boolean @default(false)
+  wantMain         Boolean @default(false)
+  isMainSpecial    Boolean @default(false)
+
+  haveCountNormal  Int     @default(0)
+  wantCountNormal  Int     @default(0)
+  haveCountSpecial Int     @default(0)
+  wantCountSpecial Int     @default(0)
+
+  Card             Card    @relation(fields: [cardId], references: [id])
+  cardId           String
+  User             User    @relation(fields: [userId], references: [id])
+  userId           String
+
+  @@id([cardId, userId])
+}

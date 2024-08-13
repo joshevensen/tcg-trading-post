@@ -1,0 +1,80 @@
+import './user'
+import './card'
+
+model Set {
+  id           String    @id @default(cuid())
+  name         String
+  code         String?
+  release_date DateTime?
+
+  Game         Game      @relation(fields: [gameId], references: [id])
+  gameId       String
+  Cards        Card[]
+}
+
+model Game {
+  id           String      @id @default(cuid())
+  name         String      @unique
+
+  factionLabel String      @default('faction')
+  specialLabel String      @default('foil')
+
+  playSetCount Int
+
+  Types        Type[]
+  Factions     Faction[]
+  Rarities     Rarity[]
+  Attributes   Attribute[]
+  Sets         Set[]
+  Cards        Card[]
+  Users        User[]
+}
+
+enum AttributeTypes {
+  String
+  Number
+  List
+  Boolean
+  Date
+}
+
+model Attribute {
+  id       String           @id @default(cuid())
+  name     String
+  type     AttributeTypes
+  options  String[]
+  required Boolean          @default(false)
+
+  Game     Game             @relation(fields: [gameId], references: [id])
+  gameId   String
+  Cards    CardAttributes[]
+}
+
+model Type {
+  id     String @id @default(cuid())
+  name   String
+
+  Game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+  Cards  Card[]
+}
+
+model Faction {
+  id      String  @id @default(cuid())
+  name    String
+  color   String
+  hexCode String?
+
+  Game    Game    @relation(fields: [gameId], references: [id])
+  gameId  String
+  Cards   Card[]
+}
+
+model Rarity {
+  id     String @id @default(cuid())
+  name   String
+
+  Game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+  Cards  Card[]
+}

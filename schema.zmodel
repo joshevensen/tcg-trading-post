@@ -1,0 +1,12 @@
+import './db/schema/user'
+import './db/schema/game'
+import './db/schema/card'
+
+datasource db {
+    provider = 'postgresql'
+    url = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
