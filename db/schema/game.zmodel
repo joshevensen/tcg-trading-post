@@ -4,7 +4,7 @@ import './card'
 model Set {
   id          String    @id @default(cuid())
   name        String
-  code        String?
+  code        String
   releaseDate DateTime?
   isHidden    Boolean   @default(false)
 

@@ -17,8 +17,3 @@ model User {
   // full access by self
   @@allow('all', auth() == this)
 }
-
-model UserGames {
-  id             String @id @default(cuid())
-  wantedPlaySets Int    @default(0)
-}

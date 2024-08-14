@@ -50,18 +50,18 @@ export async function CardStore(newCard: CardNew) {
 /**
  * Upsert
  */
-// export async function CardUpsert(newCard: CardNew) {
-// const existingCard = await utils.db.card.findFirst({
-//   where: {
-//     name: newCard.name,
-//     version: newCard.version,
-//     setCode: newCard.setCode,
-//     setNumber: newCard.setNumber,
-//   },
-// });
-// if (existingCard) return existingCard;
-// return CardStore(newCard);
-// }
+export async function CardUpsert(newCard: CardNew) {
+  const gameId = newCard.gameId;
+  const setId = newCard.setId;
+  const number = newCard.number;
+  const existingCard = await utils.db.card.findUnique({
+    where: { cardId: { gameId, setId, number } },
+  });
+
+  if (existingCard) return existingCard;
+
+  return CardStore(newCard);
+}
 
 /**
  * Update
@@ -78,20 +78,20 @@ export async function CardUpdate(updatedCard: Card) {
 /**
  * Connect
  */
-// export async function CardConnect(
-//   card: Card,
-//   relationship: "Classifications" | "Illustrators" | "Keywords" | "Types",
-//   name: string
-// ) {
-//   await utils.db.card.update({
-//     where: { id: card.id },
-//     data: {
-//       [relationship]: {
-//         connectOrCreate: { where: { name }, create: { name } },
-//       },
-//     },
-//   });
-// }
+export async function CardConnect(
+  card: Card,
+  relationship: "Classifications" | "Illustrators" | "Keywords" | "Types",
+  name: string
+) {
+  await utils.db.card.update({
+    where: { id: card.id },
+    data: {
+      [relationship]: {
+        connectOrCreate: { where: { name }, create: { name } },
+      },
+    },
+  });
+}
 
 /**
  * Delete

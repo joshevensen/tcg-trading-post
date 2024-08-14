@@ -4,7 +4,7 @@ import './game'
 model Card {
   id           String           @id @default(cuid())
 
-  number       Int
+  number       String
   name         String
   text         String?
   flavorText   String?
@@ -25,6 +25,8 @@ model Card {
   rarityId     String?
 
   Counts       UserCardCounts[]
+
+  @@unique(name: "cardId", [gameId, setId, number])
 }
 
 model CardAttributes {
@@ -44,19 +46,18 @@ model CardAttributes {
 
 // Explicit Many-to-Many between Card and User
 model UserCardCounts {
-  haveMain         Boolean @default(false)
-  wantMain         Boolean @default(false)
-  isMainSpecial    Boolean @default(false)
+  haveNormal   Int    @default(0)
+  wantNormal   Int    @default(0)
+  tradeNormal  Int    @default(0)
 
-  haveCountNormal  Int     @default(0)
-  wantCountNormal  Int     @default(0)
-  haveCountSpecial Int     @default(0)
-  wantCountSpecial Int     @default(0)
+  haveSpecial  Int    @default(0)
+  wantSpecial  Int    @default(0)
+  tradeSpecial Int    @default(0)
 
-  Card             Card    @relation(fields: [cardId], references: [id])
-  cardId           String
-  User             User    @relation(fields: [userId], references: [id])
-  userId           String
+  Card         Card   @relation(fields: [cardId], references: [id])
+  cardId       String
+  User         User   @relation(fields: [userId], references: [id])
+  userId       String
 
   @@id([cardId, userId])
 }

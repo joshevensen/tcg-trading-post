@@ -9,7 +9,9 @@ import type {
   Type as DefaultType,
 } from "@prisma/client";
 
-export interface Set extends DefaultSet {}
+export interface Set extends DefaultSet {
+  _count?: any
+}
 export interface Game extends DefaultGame {}
 export interface Card extends DefaultCard {
   Types?: DefaultType[];
@@ -21,4 +23,4 @@ export interface Card extends DefaultCard {
 
 export type SetNew = Omit<DefaultSet, "id" | "isHidden">;
 export type GameNew = Omit<DefaultGame, "id">;
-export type CardNew = Omit<DefaultCard, "id">;
+export type CardNew = Omit<DefaultCard, "id" | "factionId" | "rarityId">;

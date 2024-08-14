@@ -35,21 +35,6 @@ export async function GameStore(newGame: GameNew) {
 }
 
 /**
- * Upsert
- */
-// export async function GameUpsert(newGame: GameNew) {
-//   const existingGame = await utils.db.game.findFirst({
-//     where: { gameId_code: newGame.code },
-//   });
-
-//   if (existingGame) return existingGame;
-
-//   const Game = GameStore(newGame);
-
-//   return Game;
-// }
-
-/**
  * Update
  */
 export async function GameUpdate(updatedGame: Game) {
