@@ -19,6 +19,6 @@ export interface Card extends DefaultCard {
   Set?: DefaultSet;
 }
 
-export type SetNew = Omit<DefaultSet, "id">;
+export type SetNew = Omit<DefaultSet, "id" | "isHidden">;
 export type GameNew = Omit<DefaultGame, "id">;
 export type CardNew = Omit<DefaultCard, "id">;
