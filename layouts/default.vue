@@ -9,6 +9,8 @@
       </nav>
     </header>
 
-    <slot />
+    <main class="pt-4 pb-10">
+      <slot />
+    </main>
   </UContainer>
 </template>

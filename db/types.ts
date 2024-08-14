@@ -1,11 +1,24 @@
-import type { Card as DefaultCard } from "@prisma/client";
-import type { Game as DefaultGame } from "@prisma/client";
-import type { Set as DefaultSet } from "@prisma/client";
+import type {
+  Attribute as DefaultAttribute,
+  Card as DefaultCard,
+  CardAttributes as DefaultCardAttributes,
+  Game as DefaultGame,
+  Faction as DefaultFaction,
+  Rarity as DefaultRarity,
+  Set as DefaultSet,
+  Type as DefaultType,
+} from "@prisma/client";
 
-export interface Set extends DefaultSet {};
-export interface Game extends DefaultGame {};
-export interface Card extends DefaultCard {};
+export interface Set extends DefaultSet {}
+export interface Game extends DefaultGame {}
+export interface Card extends DefaultCard {
+  Types?: DefaultType[];
+  Rarity?: DefaultRarity;
+  Faction?: DefaultFaction;
+  Attributes?: DefaultCardAttributes[];
+  Set?: DefaultSet;
+}
 
-export type SetNew = Omit<DefaultSet, 'id'>;
-export type GameNew = Omit<DefaultGame, 'id'>;
-export type CardNew = Omit<DefaultCard, 'id'>;
+export type SetNew = Omit<DefaultSet, "id">;
+export type GameNew = Omit<DefaultGame, "id">;
+export type CardNew = Omit<DefaultCard, "id">;

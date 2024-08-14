@@ -46,9 +46,12 @@ model Set {
   name        String
   code        String?
   releaseDate DateTime?
+  isHidden    Boolean   @default(false)
   gameId      String
   Game        Game      @relation(fields: [gameId], references: [id])
   Cards       Card[]
+
+  @@unique(name: "setId", [gameId, code])
 }
 
 model Game {

@@ -8,7 +8,13 @@ defineProps({
 </script>
 
 <template>
-  <div class="pt-10 pb-2 border-b border-gray-300">
-    <h1 class="text-5xl">{{ name }}</h1>
+  <div class="mb-8 py-2 border-b border-gray-300">
+    <div class="flex justify-between items-center">
+      <h1 class="text-5xl">{{ name }}</h1>
+
+      <div>
+        <slot></slot>
+      </div>
+    </div>
   </div>
 </template>

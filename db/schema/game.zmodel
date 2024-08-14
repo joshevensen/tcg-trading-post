@@ -2,14 +2,17 @@ import './user'
 import './card'
 
 model Set {
-  id           String    @id @default(cuid())
-  name         String
-  code         String?
+  id          String    @id @default(cuid())
+  name        String
+  code        String?
   releaseDate DateTime?
+  isHidden    Boolean   @default(false)
 
-  gameId       String
-  Game         Game      @relation(fields: [gameId], references: [id])
-  Cards        Card[]
+  gameId      String
+  Game        Game      @relation(fields: [gameId], references: [id])
+  Cards       Card[]
+
+  @@unique(name: "setId", [gameId, code])
 }
 
 model Game {

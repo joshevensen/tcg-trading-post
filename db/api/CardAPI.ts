@@ -1,12 +1,19 @@
+import utils from "@/utils";
 import type { CardNew, Card } from "../types";
 import type { Card as DefaultCard } from "@prisma/client";
+
+const include = {
+  Set: true,
+  Types: true,
+  Rarity: true,
+  Faction: true,
+  Attributes: true,
+};
 
 /**
  * GetAll
  */
 export async function CardGetAll(setId?: string) {
-  const include = { Set: true, Types: true, BinderCards: true };
-
   if (setId) {
     return await utils.db.card.findMany({
       orderBy: [{ name: "asc" }],
@@ -27,6 +34,7 @@ export async function CardGetAll(setId?: string) {
 export async function CardGetOne(CardId: string) {
   return await utils.db.card.findUnique({
     where: { id: CardId },
+    include,
   });
 }
 
@@ -34,52 +42,26 @@ export async function CardGetOne(CardId: string) {
  * Store
  */
 export async function CardStore(newCard: CardNew) {
-  // const result = await utils.db.card.create({
-  //   data: {
-  //     name: newCard.name,
-  //     setCode: newCard.setCode,
-  //     setNumber: newCard.setNumber,
-  //     inkColor: newCard.inkColor,
-  //     isInkable: newCard.isInkable,
-  //     version: newCard.version,
-  //     cost: newCard.cost,
-  //     strength: newCard.strength,
-  //     willpower: newCard.willpower,
-  //     lore: newCard.lore,
-  //     moveCost: newCard.moveCost,
-  //     text: newCard.text,
-  //     flavorText: newCard.flavorText,
-  //     imageUrl: newCard.imageUrl,
-  //     releasedAt: newCard.releasedAt,
-  //     rarity: newCard.rarity,
-  //     layout: newCard.layout,
-  //     tcgplayerId: String(newCard.tcgplayerId),
-  //     Set: {
-  //       connect: { id: newCard.setId },
-  //     },
-  //   },
-  // });
+  const result = await utils.db.card.create({ data: newCard });
 
-  // return result;
+  return result;
 }
 
 /**
  * Upsert
  */
-export async function CardUpsert(newCard: CardNew) {
-  // const existingCard = await utils.db.card.findFirst({
-  //   where: {
-  //     name: newCard.name,
-  //     version: newCard.version,
-  //     setCode: newCard.setCode,
-  //     setNumber: newCard.setNumber,
-  //   },
-  // });
-
-  // if (existingCard) return existingCard;
-
-  // return CardStore(newCard);
-}
+// export async function CardUpsert(newCard: CardNew) {
+// const existingCard = await utils.db.card.findFirst({
+//   where: {
+//     name: newCard.name,
+//     version: newCard.version,
+//     setCode: newCard.setCode,
+//     setNumber: newCard.setNumber,
+//   },
+// });
+// if (existingCard) return existingCard;
+// return CardStore(newCard);
+// }
 
 /**
  * Update
