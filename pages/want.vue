@@ -1,11 +1,11 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: "TCG Trading Post",
+  title: "Want List | TCG Trading Post",
 });
 </script>
 
 <template>
   <div>
-    <PageHeader name="Home" />
+    <PageHeader name="Want List" />
   </div>
 </template>
