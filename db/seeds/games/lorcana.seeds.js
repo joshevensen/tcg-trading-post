@@ -20,12 +20,12 @@ export default async function lorcanaSeeds(prisma) {
       },
       Factions: {
         create: [
-          { name: "Amber", color: "yellow" },
-          { name: "Amethyst", color: "purple" },
-          { name: "Emerald", color: "green" },
-          { name: "Ruby", color: "red" },
-          { name: "Sapphire", color: "sapphire" },
-          { name: "Steel", color: "steel" },
+          { name: "Amber", color: "yellow", hexCode: "F4B223" },
+          { name: "Amethyst", color: "purple", hexCode: "7C4182" },
+          { name: "Emerald", color: "green", hexCode: "329044" },
+          { name: "Ruby", color: "red", hexCode: "D50037" },
+          { name: "Sapphire", color: "sapphire", hexCode: "0093C9" },
+          { name: "Steel", color: "steel", hexCode: "97A3AE" },
         ],
       },
       Rarities: {

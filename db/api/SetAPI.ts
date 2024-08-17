@@ -7,6 +7,7 @@ import type { Set as DefaultSet } from "@prisma/client";
  */
 export async function SetGetAll() {
   return await utils.db.set.findMany({
+    where: { isHidden: false },
     orderBy: [{ code: "asc" }],
     include: {
       _count: {

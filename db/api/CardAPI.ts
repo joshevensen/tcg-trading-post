@@ -1,5 +1,5 @@
 import utils from "@/utils";
-import type { CardNew, Card } from "../types";
+import type { CardNew, Card, Faction, Rarity } from "../types";
 import type { Card as DefaultCard } from "@prisma/client";
 
 const include = {
@@ -13,17 +13,22 @@ const include = {
 /**
  * GetAll
  */
-export async function CardGetAll(setId?: string) {
-  if (setId) {
+export async function CardGetAll(
+  gameId: string,
+  setId: string,
+  factionId?: string
+) {
+  if (factionId !== "undefined") {
     return await utils.db.card.findMany({
-      orderBy: [{ name: "asc" }],
-      where: { setId },
+      orderBy: [{ number: "asc" }],
+      where: { AND: { gameId, setId, factionId } },
       include,
     });
   }
 
   return await utils.db.card.findMany({
-    orderBy: [{ name: "asc" }],
+    orderBy: [{ number: "asc" }],
+    where: { AND: { gameId, setId } },
     include,
   });
 }
@@ -80,14 +85,14 @@ export async function CardUpdate(updatedCard: Card) {
  */
 export async function CardConnect(
   card: Card,
-  relationship: "Classifications" | "Illustrators" | "Keywords" | "Types",
-  name: string
+  relationship: "Faction" | "Rarity",
+  itemId: string
 ) {
   await utils.db.card.update({
     where: { id: card.id },
     data: {
       [relationship]: {
-        connectOrCreate: { where: { name }, create: { name } },
+        connect: { id: itemId },
       },
     },
   });

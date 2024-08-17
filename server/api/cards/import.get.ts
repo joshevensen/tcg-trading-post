@@ -1,4 +1,5 @@
-import { CardStore, CardUpsert } from "~/db/api/CardAPI";
+import { CardConnect, CardUpsert } from "~/db/api/CardAPI";
+import { FactionGetAll } from "~/db/api/FactionAPI";
 import { GameGetOne } from "~/db/api/GameAPI";
 import { SetGetOne } from "~/db/api/SetAPI";
 import utils from "~/utils";
@@ -26,32 +27,23 @@ export default defineEventHandler(async (event) => {
 
     if (gameUtil) {
       const cards = await gameUtil.getCards(set!.code);
+      const factions = await FactionGetAll();
 
       cards.results.forEach(async (result: any) => {
-        const {newCard} = gameUtil.convertCard(result, gameId, setId);
-        await CardUpsert(newCard);
+        const { card, faction } = gameUtil.convertCard(
+          result,
+          gameId,
+          setId,
+          factions
+        );
+        const newCard = await CardUpsert(card);
+        if (faction) await CardConnect(newCard, "Faction", faction.id);
+
+        // Rarity
+        // Types
+        // Attributes
       });
     }
-
-      // result.type.forEach(async (type: string) => {
-      //   await CardConnect(newCard, "Types", type);
-      // });
-
-      // if (result.classifications) {
-      //   result.classifications.forEach(async (classification: string) => {
-      //     await CardConnect(newCard, "Classifications", classification);
-      //   });
-      // }
-
-      // if (result.keywords) {
-      //   result.keywords.forEach(async (keyword: string) => {
-      //     await CardConnect(newCard, "Keywords", keyword);
-      //   });
-      // }
-
-      // result.illustrators.forEach(async (illustrator: string) => {
-      //   await CardConnect(newCard, "Illustrators", illustrator);
-      // });
 
     console.log("imported");
 

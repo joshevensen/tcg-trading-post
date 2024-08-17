@@ -1,5 +1,6 @@
 import utils from "..";
-import type { CardNew, SetNew } from "~/db/types";
+import _ from "lodash";
+import type { Attribute, CardNew, Faction, SetNew, Type } from "~/db/types";
 
 const lorcastBaseURL = "https://api.lorcast.com";
 
@@ -10,7 +11,9 @@ async function getSets() {
 }
 
 async function getCards(setCode: string) {
-  const { data } = await utils.http.get(`${lorcastBaseURL}/v0/cards/search?q=set:${setCode}`);
+  const { data } = await utils.http.get(
+    `${lorcastBaseURL}/v0/cards/search?q=set:${setCode}`
+  );
 
   return data;
 }
@@ -26,12 +29,17 @@ function convertSet(lorcastSet: any, gameId: string) {
   return newSet;
 }
 
-function convertCard(lorcastCard: any, gameId: string, setId: string) {
+function convertCard(
+  lorcastCard: any,
+  gameId: string,
+  setId: string,
+  factions: Faction[]
+) {
   const urls = lorcastCard.image_uris.digital;
   const imageUrl = urls.normal || urls.large || urls.small;
 
-  const newCard: CardNew = {
-    number: String(lorcastCard.collector_number),
+  const card: CardNew = {
+    number: _.padStart(String(lorcastCard.collector_number), 3, "0"),
     name: lorcastCard.name,
     text: lorcastCard.text,
     flavorText: lorcastCard.flavor_text,
@@ -42,9 +50,18 @@ function convertCard(lorcastCard: any, gameId: string, setId: string) {
     setId,
   };
 
+  const faction = factions.find((faction) => faction.name === lorcastCard.ink);
+  const rarity = "";
+  const types: Type[] = [];
+  const attributes: Attribute[] = [];
+
   return {
-    newCard,
-  }
+    card,
+    faction,
+    rarity,
+    types,
+    attributes,
+  };
 }
 
 const lorcanaUtil = {
